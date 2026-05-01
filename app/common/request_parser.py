@@ -201,6 +201,14 @@ def _build_all_destinations() -> list[str]:
 ALL_DESTINATIONS = _build_all_destinations()
 
 
+PREFERENCE_ALIASES = {
+    "sightseeing": "general sightseeing",
+    "tour": "general sightseeing",
+    "explore": "general sightseeing",
+    "exploring": "general sightseeing",
+}
+
+
 PREFERENCE_NOISE_TOKENS = {
     "budget",
     "sgd",
@@ -363,7 +371,11 @@ def parse_trip_request(text: str) -> dict:
     preferences = []
     if cleaned_preferences:
         parts = re.split(r",|\band\b", cleaned_preferences)
-        preferences = [p.strip() for p in parts if p.strip()]
+        preferences = [
+            PREFERENCE_ALIASES.get(p.strip(), p.strip())
+            for p in parts
+            if p.strip()
+        ]
 
     start_date, end_date = _infer_dates(duration_days)
 

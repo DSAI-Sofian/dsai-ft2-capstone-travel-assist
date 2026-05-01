@@ -10,6 +10,7 @@ app = FastAPI(title="SEA Travel Planner")
 
 
 class TripRequest(BaseModel):
+    query: str | None = None
     origin: str = Field(default="Singapore", min_length=1)
     destinations: list[str] = Field(default_factory=list)
     budget: float | None = Field(default=None, ge=0)
@@ -40,6 +41,14 @@ class TripRequest(BaseModel):
 
 
 def build_raw_request(req: TripRequest) -> str:
+    if req.query and req.query.strip():
+        raw_query = req.query.strip()
+
+        if req.feedback:
+            return f"{raw_query} feedback: {req.feedback}"
+
+        return raw_query
+
     parts: list[str] = []
 
     if req.duration_days:

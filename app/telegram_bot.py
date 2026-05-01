@@ -68,21 +68,32 @@ def is_followup_request(text: str) -> bool:
     followup_phrases = [
         "cheaper",
         "cheaper option",
+        "comfort",
+        "comfort please",
+        "add comfort",
         "more comfort",
+        "add more comfort"
         "more comfort please",
         "less rushed",
         "make it less rushed",
-        "more activities",
         "add more",
         "add more food",
         "add more food places",
+        "more food",
+        "add nature",
+        "add more nature",
         "add nature activities",
-        "nature activities",
+        "add more nature activities",
+        "activities",
+        "add activities",
+        "add more activities",
+        "more activities",
+        "activities",
         "same style",
         "same style as before",
         "budget saver",
         "comfort upgrade",
-        "balanced",
+        "balanced pick",
         "another option",
         "try again",
     ]
@@ -260,7 +271,7 @@ async def start(update, context):
         "- Cheaper option\n"
         "- More comfort please\n"
         "- Less rushed\n"
-        "- Same style as before (for new queries)\n\n"
+        "- Same style as before (for new queries) [Coming soon]\n\n"
         "All prices listed are tentative. You must approach service providers "
         "directly for booking and payment."
     )

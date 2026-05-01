@@ -347,7 +347,7 @@ async def continuity_agent(state: AgentState) -> AgentState:
             itinerary = []
 
         additional_activity_note = (
-            " Add one optional light activity if time allows."
+            " Optional add-on: include one additional nearby activity if time allows."
         )
 
         updated_days = 0
@@ -356,10 +356,20 @@ async def continuity_agent(state: AgentState) -> AgentState:
             if not isinstance(day, dict):
                 continue
 
-            details = day.get("details", "")
+            updated_this_day = False
 
-            if additional_activity_note.strip() not in details:
-                day["details"] = details + additional_activity_note
+            for field in ["afternoon", "evening", "optional_add_on"]:
+                current_value = day.get(field, "")
+
+                if not isinstance(current_value, str):
+                    continue
+
+                if "additional nearby activity" not in current_value.lower():
+                    day[field] = current_value.rstrip() + additional_activity_note
+                    updated_this_day = True
+                    break
+
+            if updated_this_day:
                 updated_days += 1
 
             # Limit modifications to avoid overloading every day
